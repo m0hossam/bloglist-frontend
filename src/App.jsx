@@ -10,22 +10,24 @@ const App = () => {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs(blogs)
-    )
+    blogService.getAll()
+      .then(blogs => setBlogs(blogs)
+      )
+      .catch(() => console.log('Could not connect to DB')
+      )
   }, [])
 
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault() // Prevent default redirection behavior of forms
-    loginService.login({ username, password })
-      .then((user) => {
-        console.log(user);
-        setUser(user)
-        setUsername('')
-        setPassword('')
-      })
-      .catch(() => console.log('Wrong credentials')
-      )
+
+    try {
+      const user = await loginService.login({ username, password })
+      setUser(user)
+      setUsername('')
+      setPassword('')
+    } catch {
+      console.log('Wrong credentials')
+    }
   }
 
   if (user === null) {
@@ -57,6 +59,7 @@ const App = () => {
       <div>
         Hello, {user.name}
       </div>
+      <br />
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
