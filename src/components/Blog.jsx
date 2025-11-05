@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-const Blog = ({ blog, handleLike }) => {
-    const [isDetailed, setIsDetailed] = useState(false)
+const Blog = ({ blog, handleLike, showRemoveButton, handleRemove }) => {
+    const [showDetails, setShowDetails] = useState(false)
 
     const blogStyle = {
         paddingTop: 10,
@@ -13,15 +13,20 @@ const Blog = ({ blog, handleLike }) => {
 
     return (
         <div style={blogStyle}>
-            <h3>{blog.title} <button onClick={() => setIsDetailed(p => !p)}>{isDetailed ? 'Hide details' : 'Show details'}</button></h3>
+            <h3>{blog.title} <button onClick={() => setShowDetails(p => !p)}>{showDetails ? 'Hide details' : 'Show details'}</button></h3>
             {
-                isDetailed && (
+                showDetails && (
                     <div>
                         <p>Author: {blog.author}</p>
                         <p>Likes: {blog.likes} <button onClick={() => handleLike(blog)}>Like</button></p>
                         <p>URL: {blog.url}</p>
                         <p>Submitted by: {blog.user.username}</p>
                     </div>
+                )
+            }
+            {
+                showRemoveButton && (
+                    <button onClick={() => handleRemove(blog)}>Remove</button>
                 )
             }
         </div>

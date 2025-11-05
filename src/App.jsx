@@ -73,6 +73,19 @@ const App = () => {
         }
     }
 
+    const removeBlog = async (blog) => {
+        const isDeleteConfirmed = window.confirm(`Are you sure you want to delete '${blog.title}' by '${blog.author}'?`)
+        if (isDeleteConfirmed) {
+            try {
+                await blogService.remove(blog.id)
+                setBlogs(prevBlogs => prevBlogs.filter(b => b.id !== blog.id))
+                createNotification('Blog removed', false)
+            } catch {
+                createNotification('Blog delete failed', true)
+            }
+        }
+    }
+
     const createNotification = (msg, isError) => {
         const notif = {
             message: msg,
@@ -119,7 +132,7 @@ const App = () => {
             </Togglable>
             <br />
             {blogs.sort((a, b) => b.likes - a.likes).map(blog => // Sorting blogs descendingly according to likes
-                <Blog key={blog.id} blog={blog} handleLike={incrementBlogLikes} />
+                <Blog key={blog.id} blog={blog} handleLike={incrementBlogLikes} showRemoveButton={blog.user.username === user.username} handleRemove={removeBlog} />
             )}
         </div>
     )
