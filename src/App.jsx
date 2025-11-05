@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
 import BlogForm from './components/BlogForm'
+import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -79,13 +80,13 @@ const App = () => {
                 <form onSubmit={handleLogin}>
                     <div>
                         <label>
-              Username
+                            Username
                             <input type='text' value={username} onChange={(event) => setUsername(event.target.value)} />
                         </label>
                     </div>
                     <div>
                         <label>
-              Password
+                            Password
                             <input type='password' value={password} onChange={(event) => setPassword(event.target.value)} />
                         </label>
                     </div>
@@ -100,11 +101,14 @@ const App = () => {
             <Notification notification={notification} />
             <h2>blogs</h2>
             <div>
-        Hello, {user.name}
+                Hello, {user.name}
+                <button onClick={handleLogout}>Logout</button>
             </div>
-            <button onClick={handleLogout}>Logout</button>
             <br />
-            <BlogForm addBlog={addBlog} />
+            <Togglable showButtonLabel='Create New Blog'>
+                <BlogForm addBlog={addBlog} />
+            </Togglable>
+            <br />
             {blogs.map(blog =>
                 <Blog key={blog.id} blog={blog} />
             )}
