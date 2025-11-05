@@ -57,9 +57,19 @@ const App = () => {
         try {
             const createdBlog = await blogService.create(newBlog)
             setBlogs(prevBlogs => prevBlogs.concat(createdBlog))
-            createNotification(`New blog added`, false)
+            createNotification('New blog added', false)
         } catch {
             createNotification('Invalid title, author, or URL', true)
+        }
+    }
+
+    const incrementBlogLikes = async (blog) => {
+        try {
+            const newBlog = { ...blog, likes: blog.likes + 1 }
+            const updatedBlog = await blogService.update(blog.id, newBlog)
+            setBlogs(prevBlogs => prevBlogs.map(b => b.id === blog.id ? updatedBlog : b))
+        } catch {
+            createNotification('Blog update failed', true)
         }
     }
 
@@ -109,7 +119,7 @@ const App = () => {
             </Togglable>
             <br />
             {blogs.map(blog =>
-                <Blog key={blog.id} blog={blog} />
+                <Blog key={blog.id} blog={blog} handleLike={incrementBlogLikes} />
             )}
         </div>
     )
