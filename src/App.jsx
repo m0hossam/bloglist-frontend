@@ -57,7 +57,7 @@ const App = () => {
         try {
             const createdBlog = await blogService.create(newBlog)
             setBlogs(prevBlogs => prevBlogs.concat(createdBlog))
-            createNotification(`New blog '${createdBlog.title}' by '${createdBlog.author}' added`, false)
+            createNotification(`New blog added`, false)
         } catch {
             createNotification('Invalid title, author, or URL', true)
         }
@@ -101,8 +101,7 @@ const App = () => {
             <Notification notification={notification} />
             <h2>blogs</h2>
             <div>
-                Hello, {user.name}
-                <button onClick={handleLogout}>Logout</button>
+                Hello, {user.name} <button onClick={handleLogout}>Logout</button>
             </div>
             <br />
             <Togglable showButtonLabel='Create New Blog'>
