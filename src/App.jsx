@@ -68,7 +68,7 @@ const App = () => {
       setBlogAuthor('')
       setBlogUrl('')
       createNotification(`New blog '${createdBlog.title}' by '${createdBlog.author}' added`, false)
-    } catch (err) {
+    } catch {
       createNotification('Invalid title, author, or URL', true)
     }
   }
