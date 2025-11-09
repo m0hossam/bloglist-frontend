@@ -13,11 +13,10 @@ const Blog = ({ blog, handleLike, showRemoveButton, handleRemove }) => {
 
     return (
         <div style={blogStyle}>
-            <h3>{blog.title} <button onClick={() => setShowDetails(p => !p)}>{showDetails ? 'Hide details' : 'Show details'}</button></h3>
+            <h3>{blog.title} - {blog.author} <button onClick={() => setShowDetails(p => !p)}>{showDetails ? 'Hide details' : 'Show details'}</button></h3>
             {
                 showDetails && (
                     <div>
-                        <p>Author: {blog.author}</p>
                         <p>Likes: {blog.likes} <button onClick={() => handleLike(blog)}>Like</button></p>
                         <p>URL: {blog.url}</p>
                         <p>Submitted by: {blog.user.username}</p>
