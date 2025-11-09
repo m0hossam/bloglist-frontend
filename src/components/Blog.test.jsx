@@ -55,3 +55,30 @@ test('Blog renders likes, URL, and username when the show button is clicked', as
     const username = screen.getByText(`Submitted by: ${blog.user.username}`)
     expect(username).toBeDefined()
 })
+
+test('Blog like button calls event handler twice if clicked twice', async () => {
+    const blog = {
+        title: 'ABC Murders',
+        author: 'Agatha Christie',
+        likes: 55,
+        url: 'https://agathachristie.com/abc_murders',
+        user: {
+            username: 'm0hossam'
+        }
+    }
+
+    const likeHandler = vi.fn()
+
+    render(<Blog blog={blog} handleLike={likeHandler} />)
+
+    const user = userEvent.setup()
+
+    const showButton = screen.getByText('Show details')
+    await user.click(showButton)
+
+    const likeButton = screen.getByText('Like')
+    await user.click(likeButton)
+    await user.click(likeButton)
+
+    expect(likeHandler.mock.calls).toHaveLength(2)
+})
