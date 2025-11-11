@@ -131,9 +131,11 @@ const App = () => {
                 <BlogForm addBlog={addBlog} />
             </Togglable>
             <br />
-            {blogs.sort((a, b) => b.likes - a.likes).map(blog => // Sorting blogs descendingly according to likes
-                <Blog key={blog.id} blog={blog} handleLike={incrementBlogLikes} showRemoveButton={blog.user.username === user.username} handleRemove={removeBlog} />
-            )}
+            <div className='blog-list'>
+                {blogs.sort((a, b) => b.likes - a.likes).map(blog => // Sorting blogs descendingly according to likes
+                    <Blog key={blog.id} blog={blog} handleLike={incrementBlogLikes} showRemoveButton={blog.user.username === user.username} handleRemove={removeBlog} />
+                )}
+            </div>
         </div>
     )
 }
